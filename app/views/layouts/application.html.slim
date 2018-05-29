@@ -12,12 +12,12 @@ html
         nav
           - if user_signed_in?
             strong
-              = link_to 'ユーザページ', user_path(current_user.id)
-            = link_to 'プロフィール変更', edit_user_registration_path
-            = link_to 'ログアウト', destroy_user_session_path, method: :delete
+              = link_to 'ユーザページ', user_path(current_user.id), class:'btn btn-primary'
+            = link_to 'プロフィール変更', edit_user_registration_path, class:'btn btn-primary'
+            = link_to 'ログアウト', destroy_user_session_path, method: :delete, class:'btn btn-secondary'
           - else
-            = link_to 'サインアップ', new_user_registration_path
-            = link_to 'ログイン', new_user_session_path
+            = link_to 'サインアップ', new_user_registration_path, class:'btn btn-primary'
+            = link_to 'ログイン', new_user_session_path, class:'btn btn-primary'
       p.notice = notice
       p.alert = alert
   
