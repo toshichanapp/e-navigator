@@ -9,7 +9,7 @@ h2
   .col-2.col-form-label
     p user birthday
   .col-10
-    = @user.birthday
+    = @user.birthday.strftime("%Y-%m-%d")
 .form-group.row
   .col-2.col-form-label
     p user school name
