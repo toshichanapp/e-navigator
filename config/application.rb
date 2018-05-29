@@ -28,6 +28,10 @@ module ENavigator
     config.generators do |g|
       g.system_tests nil
       g.template_engine :slim
+      g.skip_routes true
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
     end
   end
 end
