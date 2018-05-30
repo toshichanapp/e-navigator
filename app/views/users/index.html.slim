@@ -1,2 +1,14 @@
 h1 Users#index
-p Find me in app/views/users/index.html.slim
+
+table.table.table-bordered.table-hover
+  thead
+    tr
+      th 名前
+      th Email
+      th 年齢
+      th 性別
+      th 学校名
+      th 面接日時
+      th colspan="3"
+  tbody
+    = render @users
