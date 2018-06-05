@@ -15,7 +15,7 @@ class User < ApplicationRecord
   def age
     current = Time.now.strftime('%Y%m%d').to_i
     user_birthday = birthday.strftime('%Y%m%d').to_i
-
-    (current - user_birthday) / 10000
+    tmp_age = (current - user_birthday) / 10000
+    tmp_age >= 0 ? tmp_age : 0
   end
 end
