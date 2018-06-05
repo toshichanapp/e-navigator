@@ -13,6 +13,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   def age
-    Time.zone.now.year - birthday.year
+    current = Time.now.strftime('%Y%m%d').to_i
+    user_birthday = birthday.strftime('%Y%m%d').to_i
+
+    (current - user_birthday) / 10000
   end
 end
