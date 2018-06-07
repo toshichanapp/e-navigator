@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title ENavigator
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+  body
+    .container
+      header
+        nav
+          - if user_signed_in?
+            strong
+              = link_to 'ユーザページ', user_path(current_user.id), class:'btn btn-primary'
+            = link_to 'プロフィール変更', edit_user_registration_path, class:'btn btn-primary'
+            = link_to 'ログアウト', destroy_user_session_path, method: :delete, class:'btn btn-secondary'
+          - else
+            = link_to 'サインアップ', new_user_registration_path, class:'btn btn-primary'
+            = link_to 'ログイン', new_user_session_path, class:'btn btn-primary'
+      p.notice = notice
+      p.alert = alert
+  
+      = yield

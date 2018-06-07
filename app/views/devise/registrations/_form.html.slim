@@ -1,0 +1,38 @@
+= devise_error_messages!
+.form-group.row
+  = f.label :name, class:'col-2 col-form-label'
+  .col-10
+    = f.text_field :name, class:'form-control'
+.form-group.row
+  = f.label :birthday, class:'col-2 col-form-label'
+  .col-10
+    = f.date_field :birthday, class:'form-control'
+.form-group.row
+  = f.label :gender, class:'col-2 col-form-label'
+  .col-10
+    = f.select :gender, User.genders.keys, {}, class:'form-control'
+.form-group.row
+  = f.label :school_name, class:'col-2 col-form-label'
+  .col-10
+    = f.text_field :school_name, class:'form-control'
+.form-group.row
+  = f.label :email, class:'col-2 col-form-label'
+  .col-10
+    = f.email_field :email, autofocus: true, autocomplete: "email", class:'form-control'
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      div
+        | Currently waiting confirmation for:
+        = resource.unconfirmed_email
+.form-group.row
+  = f.label :password, class:'col-2 col-form-label'
+  .col-10
+    = f.password_field :password, autocomplete: "off", class:'form-control'
+    - if @minimum_password_length
+      br
+      em
+        = @minimum_password_length
+        |  characters minimum
+.form-group.row
+  = f.label :password_confirmation, class:'col-2 col-form-label'
+  .col-10
+    = f.password_field :password_confirmation, autocomplete: "off", class:'form-control'
