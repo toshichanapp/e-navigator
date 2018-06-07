@@ -1,0 +1,9 @@
+tr
+  td
+    = interview.date
+  td
+    = interview.status
+  td
+    = link_to 'edit', edit_user_interview_path(current_user, interview), class: 'btn btn-primary'
+  td
+    = link_to 'destroy', user_interview_path(current_user, interview), method: 'delete', data: {confirm: "Are you sure?"}, class: 'btn btn-danger'

@@ -1,0 +1,3 @@
+h1 面接時間指定
+= f.label :date, class: 'col-2 col-form-label sr-only'
+= f.datetime_select :date, {use_month_names: %w(1月 2月 3月 4月 5月 6月 7月 8月 9月 10月 11月 12月), start_year: Time.now.year, default: Time.now}, {class: 'form-control', style: 'display: inline-block; width: auto;'}
