@@ -1,8 +1,9 @@
 class InterviewsController < ApplicationController
+  before_action :set_user
   before_action :set_interview, only: %i[show edit update destroy]
 
   def index
-    @interviews = current_user.interviews
+    @interviews = @user.interviews
   end
 
   def show; end
@@ -44,7 +45,11 @@ class InterviewsController < ApplicationController
     params.require(:interview).permit(:date)
   end
 
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
   def set_interview
-    @interview = current_user.interviews.find(params[:id])
+    @interview = @user.interviews.find(params[:id])
   end
 end
