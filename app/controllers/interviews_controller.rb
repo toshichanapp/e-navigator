@@ -17,7 +17,7 @@ class InterviewsController < ApplicationController
     @interview.user_id = current_user.id
     @interview.status = 2
     if @interview.save
-      redirect_to user_interview_url(current_user, @interview), success: ['created!']
+      redirect_to user_interview_url(@user, @interview), success: ['created!']
     else
       render :new
     end
@@ -28,21 +28,22 @@ class InterviewsController < ApplicationController
   def update
     @interview.attributes = interview_params
     if @interview.save
-      redirect_to user_interviews_url(current_user), success: ['updated!']
+      redirect_to user_interviews_url(@user), success: ['updated!']
     else
+      flash.now[:danger] = @interview.errors.full_messages
       render :edit
     end
   end
 
   def destroy
     @interview.destroy
-    redirect_to user_interviews_url(current_user), success: ['deleted']
+    redirect_to user_interviews_url(@user), success: ['deleted']
   end
 
   private
 
   def interview_params
-    params.require(:interview).permit(:date)
+    params.require(:interview).permit(:date, :status)
   end
 
   def set_user

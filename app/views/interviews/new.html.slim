@@ -1,4 +1,4 @@
-= form_for ([current_user, @interview]) do |f|
+= form_for ([@user, @interview]) do |f|
   = render 'form', f: f
   .actions
     = f.submit "面接予約", class: "btn btn-primary"
