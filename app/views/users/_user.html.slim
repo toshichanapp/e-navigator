@@ -9,5 +9,7 @@ tr
     = user.gender
   td
     = user.school_name
-  td 面接日時
   td
+    = user.interviews.find_by(status: 1)
+  td
+    = link_to '面接一覧へ', user_interviews_path(user), class: 'btn btn-primary'
