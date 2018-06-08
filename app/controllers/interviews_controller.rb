@@ -27,6 +27,10 @@ class InterviewsController < ApplicationController
 
   def update
     @interview.attributes = interview_params
+    if @interview.status_changed?
+      interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
+      interviews.update_all(status: 'dissmissed')
+    end
     if @interview.save
       redirect_to user_interviews_url(@user), success: ['updated!']
     else
