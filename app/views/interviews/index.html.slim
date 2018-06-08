@@ -1,12 +1,16 @@
 h1 面接一覧
 
-= link_to '面接予約', new_user_interview_path, class:'btn btn-primary'
-table.table.table-bordered.table-hover
-  thead
-    tr
-      th 面接日時
-      th 承認状態
-      th
-      th
-  tbody
-    = render @interviews
+- if current_user == @user
+  = link_to '面接予約', new_user_interview_path, class:'btn btn-primary'
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th 面接日時
+        th 承認状態
+        th
+        th
+    tbody
+      = render @interviews
+- else
+  - @interviews.each do |interview|
+    = button_to interview.date, user_interview_path(@user, interview), method: :put, params: {interview:{status: 'approval'}}, data: {confirm: "#{interview.date}で面接を確定していいですか？"}
