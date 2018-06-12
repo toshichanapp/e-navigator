@@ -15,9 +15,9 @@ class InterviewsController < ApplicationController
   def create
     @interview = Interview.new(interview_params)
     @interview.user_id = current_user.id
-    @interview.status = 2
+    @interview.status = :pending
     if @interview.save
-      redirect_to user_interview_url(current_user, @interview), success: ['created!']
+      redirect_to user_interview_url(current_user, @interview), success: 'created!'
     else
       render :new
     end
@@ -28,7 +28,7 @@ class InterviewsController < ApplicationController
   def update
     @interview.attributes = interview_params
     if @interview.save
-      redirect_to user_interviews_url(current_user), success: ['updated!']
+      redirect_to user_interviews_url(current_user), success: 'updated!'
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class InterviewsController < ApplicationController
 
   def destroy
     @interview.destroy
-    redirect_to user_interviews_url(current_user), success: ['deleted']
+    redirect_to user_interviews_url(current_user), success: 'deleted'
   end
 
   private
