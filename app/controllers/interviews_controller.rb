@@ -1,4 +1,5 @@
 class InterviewsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user
   before_action :set_interview, only: %i[show edit update destroy]
 
