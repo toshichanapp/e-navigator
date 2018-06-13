@@ -29,15 +29,26 @@ class InterviewsController < ApplicationController
 
   def update
     @interview.attributes = interview_params
-    if @interview.status_changed?
-      interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
-      interviews.update_all(status: 'dissmissed')
-    end
-    if @interview.save
-      redirect_to user_interviews_url(@user), success: 'updated!'
+    if @user == current_user
+      if @interview.status == 'approval'
+        redirect_to user_interviews_url(current_user), danger: '承認された日程を変更することはできません'
+      else
+        @interview.save
+        render :edit, success: 'updated'
+      end
     else
-      flash.now[:danger] = @interview.errors.full_messages
-      render :edit
+      case interview_params[:status]
+      when 'approval'
+        interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
+        interviews.update_all(status: 'dissmissed')
+      when 'dissmissed'
+      end
+      if @interview.save
+        redirect_to user_interviews_url(@user), success: 'updated!'
+      else
+        flash.now[:danger] = @interview.errors.full_messages
+        render :edit
+      end
     end
   end
 
