@@ -14,7 +14,8 @@ h1 ="#{@user.name}さんの面接一覧"
 - else
   h2 現在の面接日程
   -# status: {dissmissed: 0, approval: 1, pending: 2}
-  = @interviews.find_by(status: 1).date
+  - if @user.approve_interview
+    = @user.approve_interview.date
   hr
   h3 面接日程を変更する場合は以下から選んでください。
   - @interviews.where.not(status: 1).each do |interview|

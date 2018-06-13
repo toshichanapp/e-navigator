@@ -20,4 +20,8 @@ class User < ApplicationRecord
     tmp_age = (current - user_birthday) / 10000
     tmp_age >= 0 ? tmp_age : 0
   end
+
+  def approval_interview
+    interviews.find_by(status: 1)
+  end
 end
