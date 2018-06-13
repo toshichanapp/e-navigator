@@ -34,7 +34,7 @@ class InterviewsController < ApplicationController
       interviews.update_all(status: 'dissmissed')
     end
     if @interview.save
-      redirect_to user_interviews_url(current_user), success: 'updated!'
+      redirect_to user_interviews_url(@user), success: 'updated!'
     else
       flash.now[:danger] = @interview.errors.full_messages
       render :edit
