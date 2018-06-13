@@ -3,6 +3,7 @@ class InterviewsController < ApplicationController
   before_action :set_interview, only: %i[show edit update destroy]
 
   def index
+    # status: {dissmissed: 0, approval: 1, pending: 2}
     @interviews = @user.interviews
   end
 

@@ -1,4 +1,4 @@
-h1 面接一覧
+h1 ="#{@user.name}さんの面接一覧"
 
 - if current_user == @user
   = link_to '面接予約', new_user_interview_path, class:'btn btn-primary'
@@ -12,5 +12,10 @@ h1 面接一覧
     tbody
       = render @interviews
 - else
-  - @interviews.each do |interview|
-    = button_to interview.date, user_interview_path(@user, interview), method: :put, params: {interview:{status: 'approval'}}, data: {confirm: "#{interview.date}で面接を確定していいですか？"}
+  h2 現在の面接日程
+  -# status: {dissmissed: 0, approval: 1, pending: 2}
+  = @interviews.find_by(status: 1).date
+  hr
+  h3 面接日程を変更する場合は以下から選んでください。
+  - @interviews.where.not(status: 1).each do |interview|
+    = button_to interview.date, user_interview_path(@user, interview), method: :put, params: {interview:{status: 'approval'}}, class: 'btn btn-outline-primary', data: {confirm: "#{interview.date}で面接を確定していいですか？"}
