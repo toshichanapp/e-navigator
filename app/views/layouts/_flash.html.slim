@@ -1,0 +1,8 @@
+- flash.each do |message_type, messages|
+  .alert class="alert-#{message_type}"
+    - if messages.is_a?(String)
+      = messages
+    - elsif messages.is_a?(Array)
+      - messages.each do |msg|
+        li
+          = msg

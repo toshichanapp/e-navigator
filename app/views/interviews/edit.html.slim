@@ -1,0 +1,4 @@
+= form_for ([current_user, @interview]) do |f|
+  = render 'form', f: f
+  .actions
+    = f.submit "予約時間を変更する", class: "btn btn-primary"
