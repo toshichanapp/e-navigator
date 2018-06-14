@@ -11,6 +11,6 @@ tr
     = user.school_name
   td
     - if user.interviews.approval.present?
-      = user.interviews.approval.date
+      = user.interviews.approval[0].date
   td
     = link_to '面接一覧へ', user_interviews_path(user), class: 'btn btn-primary'

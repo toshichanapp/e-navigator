@@ -31,11 +31,11 @@ class InterviewsController < ApplicationController
 
     if @user == current_user
 
-      if @interview.status.approval?
+      if @interview.approval?
         redirect_to user_interviews_url(current_user), danger: '承認された日程を変更することはできません'
       else
         @interview.save
-        render :edit, success: 'updated'
+        redirect_to user_interviews_url(current_user), success: 'updated'
       end
     else
       case interview_params[:status]
