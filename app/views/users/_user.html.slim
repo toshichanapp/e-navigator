@@ -10,7 +10,7 @@ tr
   td
     = user.school_name
   td
-    - if user.approval_interview
-      = user.approval_interview.date
+    - if user.interviews.approval.present?
+      = user.interviews.approval.date
   td
     = link_to '面接一覧へ', user_interviews_path(user), class: 'btn btn-primary'

@@ -13,8 +13,8 @@ h1 ="#{@user.name}さんの面接一覧"
       = render @interviews
 - else
   h2 現在の面接日程
-  - if @user.approval_interview
-    = @user.approval_interview.date
+  - if @user.interviews.approval
+    = @user.interviews.approval.date
     = button_to 'この日程をキャンセルする', user_interview_path(@user, @user.approval_interview), method: :put, params: {interview: {status: 'dissmissed'}}, class: 'btn btn-outline-danger', data: {confirm: "#{@user.approval_interview.date}の面接をキャンセルしていいですか？"}
   hr
   h3 面接日程を変更する場合は以下から選んでください。

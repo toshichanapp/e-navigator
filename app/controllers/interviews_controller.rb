@@ -4,7 +4,6 @@ class InterviewsController < ApplicationController
   before_action :set_interview, only: %i[show edit update destroy]
 
   def index
-    # status: {dissmissed: 0, approval: 1, pending: 2}
     @interviews = @user.interviews
   end
 
@@ -29,8 +28,10 @@ class InterviewsController < ApplicationController
 
   def update
     @interview.attributes = interview_params
+
     if @user == current_user
-      if @interview.status == 'approval'
+
+      if @interview.status.approval?
         redirect_to user_interviews_url(current_user), danger: '承認された日程を変更することはできません'
       else
         @interview.save
