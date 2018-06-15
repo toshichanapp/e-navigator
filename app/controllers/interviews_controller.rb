@@ -1,4 +1,5 @@
 class InterviewsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user
   before_action :set_interview, only: %i[show edit update destroy]
 
@@ -27,10 +28,28 @@ class InterviewsController < ApplicationController
 
   def update
     @interview.attributes = interview_params
-    if @interview.save
-      redirect_to user_interviews_url(current_user), success: 'updated!'
+
+    if @user == current_user
+
+      if @interview.approval?
+        redirect_to user_interviews_url(current_user), danger: '承認された日程を変更することはできません'
+      else
+        @interview.save
+        redirect_to user_interviews_url(current_user), success: 'updated'
+      end
     else
-      render :edit
+      case interview_params[:status]
+      when 'approval'
+        interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
+        interviews.update_all(status: 'dissmissed')
+      when 'dissmissed'
+      end
+      if @interview.save
+        redirect_to user_interviews_url(@user), success: 'updated!'
+      else
+        flash.now[:danger] = @interview.errors.full_messages
+        render :edit
+      end
     end
   end
 
@@ -42,7 +61,7 @@ class InterviewsController < ApplicationController
   private
 
   def interview_params
-    params.require(:interview).permit(:date)
+    params.require(:interview).permit(:date, :status)
   end
 
   def set_user
