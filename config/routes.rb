@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     root to: "devise/sessions#new"
   end
 
+  mount LetterOpenerWeb::Engine, at: "/letter_opener"
+
   resources :users do
     resources :interviews
   end
