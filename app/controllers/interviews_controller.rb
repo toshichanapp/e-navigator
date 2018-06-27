@@ -45,8 +45,6 @@ class InterviewsController < ApplicationController
             interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
             interviews.update_all(status: 'dissmissed')
             InterviewMailer.approval_date(@interview).deliver
-          when 'dissmissed'
-            InterviewMailer.dissmiss_date(@interview).deliver
         end
         redirect_to user_interviews_url(@user), success: 'updated!'
       else
