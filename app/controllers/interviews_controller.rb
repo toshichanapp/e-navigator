@@ -39,13 +39,10 @@ class InterviewsController < ApplicationController
         redirect_to user_interviews_url(current_user), success: 'updated'
       end
     else
-      if @interview.save
-        case interview_params[:status]
-          when 'approval'
-            interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
-            interviews.update_all(status: 'dissmissed')
-            InterviewMailer.approval_date(@interview).deliver
-        end
+      if @interview.save && interview_params[:status] == 'approval'
+        interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
+        interviews.update_all(status: 'dissmissed')
+        InterviewMailer.approval_date(@interview).deliver
         redirect_to user_interviews_url(@user), success: 'updated!'
       else
         flash.now[:danger] = @interview.errors.full_messages
