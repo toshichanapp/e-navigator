@@ -18,7 +18,6 @@ gem 'jquery-rails'
 
 gem 'slim-rails'
 gem 'devise'
-gem 'letter_opener_web'
 gem 'dotenv-rails'
 
 group :development, :test do
