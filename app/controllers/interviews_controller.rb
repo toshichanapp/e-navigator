@@ -18,6 +18,7 @@ class InterviewsController < ApplicationController
     @interview.user_id = current_user.id
     @interview.status = :pending
     if @interview.save
+      InterviewMailer.require_decide_date(interview_params, current_user).deliver
       redirect_to user_interview_url(current_user, @interview), success: 'created!'
     else
       render :new
@@ -38,13 +39,10 @@ class InterviewsController < ApplicationController
         redirect_to user_interviews_url(current_user), success: 'updated'
       end
     else
-      case interview_params[:status]
-      when 'approval'
+      if @interview.save && interview_params[:status] == 'approval'
         interviews = Interview.where(user_id: @user.id).where.not(id: @interview.id)
         interviews.update_all(status: 'dissmissed')
-      when 'dissmissed'
-      end
-      if @interview.save
+        InterviewMailer.approval_date(@interview).deliver
         redirect_to user_interviews_url(@user), success: 'updated!'
       else
         flash.now[:danger] = @interview.errors.full_messages
@@ -61,7 +59,7 @@ class InterviewsController < ApplicationController
   private
 
   def interview_params
-    params.require(:interview).permit(:date, :status)
+    params.require(:interview).permit(:date, :status, :interviewer_id)
   end
 
   def set_user
